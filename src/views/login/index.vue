@@ -1,15 +1,36 @@
 <template>
-    <div class="container-login">
-        Login
-    </div>
+  <div class="container-login">
+    <el-card class="login-box">
+      <img src="../../assets/images/logo_index.png" alt />
+    </el-card>
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
 
 <style lang="less" scoped>
-
+.container-login {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: url(../../assets/images/25.jpg) no-repeat center / cover;
+}
+.login-box {
+  width: 400px;
+  height: 300px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.3;
+}
+img {
+  display: block;
+  width: 200px;
+  margin: 10px auto;
+}
 </style>
