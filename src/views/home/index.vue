@@ -10,7 +10,7 @@
         :collapse="collapse"
         :collapse-transition="false"
         style="border-right: none"
-        default-active="/"
+        v-bind:default-active="$route.path"
         background-color="#545c64"
         text-color="#fff"
         active-text-color="#ffd04b"
