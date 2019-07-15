@@ -1,5 +1,6 @@
 <template>
   <el-container class="home-container">
+    <!-- 侧边栏 -->
     <el-aside class="my-side" :width="collapse? '64px': '200px'">
         <div :class="collapse? 'close': 'logo'">
 
@@ -47,6 +48,7 @@
       </el-menu>
     </el-aside>
     <el-container>
+      <!-- 头部 -->
       <el-header class="my-header">
         <span class="el-icon-s-unfold" @click="toggleMenu"></span>
         <span class="text">木叶忍者村</span>
@@ -54,20 +56,21 @@
           <span class="el-dropdown-link">
             <img
               style="vertical-align: middle"
-              src="../../assets/images/avatar.jpg"
+              v-bind:src="avatar"
               width="30"
               height="30"
               alt
             />
-            <b style="vertical-align:middle;padding-left:5px">黑马小哥</b>
+            <b style="vertical-align:middle;padding-left:5px">{{ name }}</b>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人设置</el-dropdown-item>
-            <el-dropdown-item>退出登录</el-dropdown-item>
+            <el-dropdown-item @click.native='setting()'>个人设置</el-dropdown-item>
+            <el-dropdown-item @click.native='loginOut()'>退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
+      <!-- 主体 -->
       <el-main>
         <router-view></router-view>
       </el-main>
@@ -79,13 +82,27 @@
 export default {
   data () {
     return {
-      collapse: false
+      collapse: false,
+      avatar: '',
+      name: ''
     }
   },
   methods: {
     toggleMenu () {
       this.collapse = !this.collapse
+    },
+    setting () {
+      this.$router.push('/setting')
+    },
+    loginOut () {
+      window.sessionStorage.removeItem('dhn')
+      this.$router.push('/login')
     }
+  },
+  created () {
+    const user = JSON.parse(window.sessionStorage.getItem('dhn'))
+    this.avatar = user.photo
+    this.name = user.name
   }
 }
 </script>
