@@ -4,10 +4,8 @@
         <el-card>
             <!-- 卡片头部 -->
             <div slot='header' >
-                <el-breadcrumb separator-class="el-icon-arrow-right">
-                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>内容管理</el-breadcrumb-item>
-                </el-breadcrumb>
+                <!-- 面包屑插槽 -->
+                <bread-crumb></bread-crumb>
             </div>
             <!-- 卡片尾部 -->
             <!--表单  v-model用于表单数据的双向绑定，用于其他标签无效-->
