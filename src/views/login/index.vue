@@ -55,22 +55,35 @@ export default {
   },
   methods: {
     login () {
-      this.$refs.loginform.validate(valid => {
-        if (valid) {
-          // alert(1)
-          this.$http
-            .post('authorizations', this.formData)
-            .then((res) => {
-              // console.log(res)
-              window.sessionStorage.setItem('dhn', JSON.stringify(res.data.data))
-              this.$router.push('/')
-            })
-            .catch(() => {
-              this.$message.error('手机号或验证码错误')
-            })
+      this.$refs.loginform.validate(async valid => {
+        try {
+          if (valid) {
+            const res = await this.$http.post('authorizations', this.formData)
+            window.sessionStorage.setItem('dhn', JSON.stringify(res.data.data))
+            this.$router.push('/')
+          }
+        } catch (err) {
+          this.$message.error(err)
         }
       })
     }
+    // login () {
+    //   this.$refs.loginform.validate(valid => {
+    //     if (valid) {
+    //       // alert(1)
+    //       this.$http
+    //         .post('authorizations', this.formData)
+    //         .then((res) => {
+    //           // console.log(res)
+    //           window.sessionStorage.setItem('dhn', JSON.stringify(res.data.data))
+    //           this.$router.push('/')
+    //         })
+    //         .catch(() => {
+    //           this.$message.error('手机号或验证码错误')
+    //         })
+    //     }
+    //   })
+    // }
   }
 }
 </script>
