@@ -1,6 +1,14 @@
 import axios from 'axios'
+import JSONbig from 'json-bigint'
 const instance = axios.create({
-  baseURL: 'http://ttapi.research.itcast.cn/mp/v1_0/'
+  baseURL: 'http://ttapi.research.itcast.cn/mp/v1_0/',
+  transformResponse: [data => {
+    if (data) {
+      return JSONbig.parse(data)
+    }
+    return data
+  }]
+
 //   headers: [
 //     { Authorization: 'Bearer ' + JSON.parse(window.sessionStorage.getItem('dhn')).token }
 //   ]
