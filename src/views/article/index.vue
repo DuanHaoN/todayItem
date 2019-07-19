@@ -129,7 +129,7 @@ export default {
       this.articles = data.results
     },
     edit (id) {
-      this.$router.push(`edit/${id}`)
+      this.$router.push(`publish?id=` + id)
     },
     getDate (values) {
       this.reqParams.begin_pubdate = values[0]
