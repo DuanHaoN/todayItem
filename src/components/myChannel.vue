@@ -23,7 +23,7 @@ export default {
   methods: {
     async getChannels () {
       const { data: { data } } = await this.$http.get('channels')
-      console.log(data.channels)
+      // console.log(data.channels)
       this.options = data.channels
     },
     fn (value) {

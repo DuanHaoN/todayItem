@@ -6,10 +6,10 @@
 
 <script>
 export default {
-  created: async function () {
-    const a = await this.$http('articles')
-    console.log(a)
-  }
+  // created: async function () {
+  // const a = await this.$http('articles')
+  // console.log(a)
+  // }
 }
 </script>
 
