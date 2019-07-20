@@ -9,12 +9,14 @@ import Notfound from '@/views/404'
 import Article from '@/views/article'
 import Image from '@/views/material'
 import Publish from '@/views/publish'
+import Demo from '@/views/demo'
 
 Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes: [
     { name: 'login', path: '/login', component: Login },
+    { name: 'demo', path: '/demo', component: Demo },
     {
       // name: 'home',
       path: '/',
@@ -33,7 +35,7 @@ const router = new VueRouter({
 
 // vue-router的导航守卫
 router.beforeEach((to, from, next) => {
-  if (to.path === '/login') return next()
+  if (to.path === '/login' || to.path === '/demo') return next()
   const user = window.sessionStorage.getItem('dhn')
   if (user) return next()
   next('/login')
