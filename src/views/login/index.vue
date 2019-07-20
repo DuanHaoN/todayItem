@@ -39,7 +39,7 @@ export default {
     }
     return {
       formData: {
-        mobile: '17636322699',
+        mobile: '13911111111',
         code: '246810'
       },
       rules: {
