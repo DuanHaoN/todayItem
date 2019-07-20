@@ -1,0 +1,125 @@
+<template>
+  <div class="container">
+    <el-card>
+      <div slot="header">
+        <bread-crumb>粉丝管理</bread-crumb>
+      </div>
+      <el-tabs v-model="activeName" type="card">
+        <el-tab-pane label="粉丝列表" name="list">
+          <div class="fans-item" v-for="item in fans" :key="item.id[0]">
+            <el-avatar :size="80" :src="item.photo"></el-avatar>
+            <p style="font-size: 12px">{{item.name}}</p>
+            <el-button plain type="primary" size="mini">关注</el-button>
+          </div>
+          <el-pagination
+            background
+            layout="prev, pager, next"
+            :current-page="reqParams.page"
+            @current-change="pager"
+            :total="total"
+            :page-size="reqParams.per_page"
+          ></el-pagination>
+        </el-tab-pane>
+        <el-tab-pane label="粉丝画像" name="photo">
+            <div style="width: 600px; height: 400px" ref="bar"></div>
+        </el-tab-pane>
+      </el-tabs>
+    </el-card>
+  </div>
+</template>
+
+<script>
+import echarts from 'echarts'
+// import img from '../../assets/images/25.jpg'
+export default {
+  data () {
+    return {
+      activeName: 'photo',
+
+      fans: [],
+      reqParams: {
+        page: 1,
+        per_page: 20
+      },
+      total: 0
+    }
+  },
+  created () {
+    this.getFans()
+  },
+  mounted () {
+    // 绘制图表
+    this.drawChart()
+  },
+  methods: {
+    async getFans () {
+      const {
+        data: { data }
+      } = await this.$http.get('followers', { params: this.reqParams })
+      this.fans = data.results
+      console.log(this.fans)
+      this.total = data.total_count
+    },
+    pager (newPage) {
+      this.reqParams.page = newPage
+      this.getFans()
+    },
+    drawChart () {
+      const dom = this.$refs.bar
+      const myEcharts = echarts.init(dom)
+
+      myEcharts.setOption({
+        color: ['#3398DB'],
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: { // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            axisTick: {
+              alignWithLabel: true
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        series: [
+          {
+            name: '直接访问',
+            type: 'bar',
+            barWidth: '60%',
+            data: [10, 52, 200, 334, 390, 330, 220]
+          }
+        ]
+      }
+      )
+    }
+  }
+}
+</script>
+
+<style scoped lang='less'>
+.fans-item {
+  text-align: center;
+  height: 160px;
+  height: 160px;
+  border: 1px solid #eee;
+  padding: 10px;
+  display: inline-block;
+  margin-right: 30px;
+  margin-bottom: 20px;
+}
+</style>
